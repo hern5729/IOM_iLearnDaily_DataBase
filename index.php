@@ -3,7 +3,7 @@ To change this template use Tools | Templates.
 -->
 <?php
 	//Include - keeps processing everything else
-	require '../includes/hackathon/dbConnection.php'; //interrupts the process 
+	require 'dbConnection.php'; //interrupts the process
 	$dbConn = getConnection();
 	///////////////////////////////////////////////////////////////////////
 	
@@ -75,7 +75,7 @@ To change this template use Tools | Templates.
 	function getClassesStudents()
 	{
 		$dbConn= getConnection();
-		$sql = "SELECT * FROM ild_classes_students  `";
+		$sql = "SELECT * FROM ild_classes_students";
 		$stmt = $dbConn->prepare($sql); 
 		$stmt->execute(); 
 		return $stmt ->fetchAll();	
@@ -84,7 +84,7 @@ To change this template use Tools | Templates.
 	function getAssignments()
 	{
 		$dbConn= getConnection();
-		$sql = "SELECT * FROM ild_assignment`";
+		$sql = "SELECT * FROM ild_assignment";
 		$stmt = $dbConn->prepare($sql); 
 		$stmt->execute(); 
 		return $stmt ->fetchAll();	
@@ -95,7 +95,7 @@ To change this template use Tools | Templates.
 	function getAssignmentsGrades()
 			{
 				$dbConn= getConnection();
-				$sql = "SELECT * FROM `ild_assignment_grade` ";
+				$sql = "SELECT * FROM ild_assignment_grade ";
 				$stmt = $dbConn->prepare($sql); 
 				$stmt->execute(); 
 				return $stmt ->fetchAll();	
