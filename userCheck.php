@@ -26,8 +26,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
         //$statement->execute();
     }
-    echo "Hello";
+    //echo "Hello";
 //    exec("python generateAssignments.py". $studentOtterID." ".$studentpassword);
+      exec("python generateAssignments.py". $studentOtterID." ".$studentpassword);
 
     }
 }
