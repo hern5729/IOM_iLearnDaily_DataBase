@@ -3,7 +3,7 @@
 
 
 	//Include - keeps processing everything else
-	require '../includes/hackathon/dbConnection.php'; //interrupts the process 
+	require 'dbConnection.php'; //interrupts the process
 	$dbConn = getConnection();
 	///////////////////////////////////////////////////////////////////////
 	
@@ -58,12 +58,12 @@
 			if($find['otterId'] == $studentOtterId)
 			{
 				$studentID = $find['studentId'];
-				echo "Student Name: ";
-				echo $find['studentFirstName'] . " ".$find['studentLastname'];
-				echo "<br>"."Student ID: ";
-				echo $studentID;
-				echo "<br> "."otter ID: " ;
-				echo $find['otterId'] . "<br>";
+//				echo "Student Name: ";
+//				echo $find['studentFirstName'] . " ".$find['studentLastname'];
+//				echo "<br>"."Student ID: ";
+//				echo $studentID;
+//				echo "<br> "."otter ID: " ;
+//				echo $find['otterId'] . "<br>";
 				break;
 			}
 		}
@@ -74,7 +74,7 @@
 	function getClassesStudents()
 	{
 		$dbConn= getConnection();
-		$sql = "SELECT * FROM ild_classes_students  `";
+		$sql = "SELECT * FROM ild_classes_students ";
 		$stmt = $dbConn->prepare($sql); 
 		$stmt->execute(); 
 		return $stmt ->fetchAll();	
@@ -83,7 +83,7 @@
 	function getAssignments()
 	{
 		$dbConn= getConnection();
-		$sql = "SELECT * FROM ild_assignment`";
+		$sql = "SELECT * FROM ild_assignment";
 		$stmt = $dbConn->prepare($sql); 
 		$stmt->execute(); 
 		return $stmt ->fetchAll();	
@@ -104,8 +104,7 @@
 	
 	function returnStudentID()
 	{
-		
-			$stundentFound  = findStudent();
+        $stundentFound  = findStudent();
 		$studentOtterId = "hern5729";
 		
 		$classes = getClass();
@@ -158,10 +157,10 @@
 				{
 					if($classIDFound == $assignments['classId'])
 					{
-						echo "<br>"."ASSIGNMENTS DUE PAGE!";
+//						echo "<br>"."ASSIGNMENTS DUE PAGE!";
 						$assignmentFound = $assignments['assignmentId'];
-						echo "<br>". "Due date: ";
-						echo $assignments['dueDate'] . "<br>";
+//						echo "<br>". "Due date: ";
+//						echo $assignments['dueDate'] . "<br>";
 						$dueDatesArray[] = $assignments['dueDate'];					
 					}
 					
@@ -173,8 +172,8 @@
 					
 					if($classIDFound == $class['classId'])
 					{
-						echo "Class name: ";
-						echo $class['className'] ;
+//						echo "Class name: ";
+//						echo $class['className'] ;
 						$classesArray[] = $class['className'];
 						//echo $class['classInstructor'] . "  ". $class['classSection'] . "<br>";
 						
@@ -187,8 +186,8 @@
 					if($classIDFound == $assignments['classId'])
 					{
 						$assignmentFound = $assignments['assignmentId'];
-						echo "<br>" . "Assignment Name: ";
-						echo $assignments['assignmentName'] . "<br>";
+//						echo "<br>" . "Assignment Name: ";
+//						echo $assignments['assignmentName'] . "<br>";
 						$assignmentsArray[] = $assignments['assignmentName'];
 					}
 					
@@ -201,19 +200,19 @@
 					
 					if($classIDFound == $class['classId'])
 					{
-						echo "<br>"."ASSIGNMENTS GRADE PAGE!";					
-						echo "<br>"."Class name: ";
-						echo $class['className'] ;
+//						echo "<br>"."ASSIGNMENTS GRADE PAGE!";
+//						echo "<br>"."Class name: ";
+//						echo $class['className'] ;
 						$classesArray[] = $class['className'];
 						//echo $class['classInstructor'] . "  ". $class['classSection'] . "<br>";
 						
 					}
 				}
 							
-				echo " <br>". "Overall Grade: ";
-				echo $classStudent['overallGrade'] . "<br> ";	
+//				echo " <br>". "Overall Grade: ";
+//				echo $classStudent['overallGrade'] . "<br> ";
 				$overallGradeArray[] = $classStudent['overallGrade'];
-				echo "Last Graded: ";
+//				echo "Last Graded: ";
 				//Prints Assignment Name 
 				foreach($assignmentsHolder as $assignments)
 				{
@@ -221,8 +220,8 @@
 					{
 						$assignmentFound = $assignments['assignmentId'];
 						
-						echo "<br>" . "Assignment Name: ";
-						echo $assignments['assignmentName'] . "<br>";
+//						echo "<br>" . "Assignment Name: ";
+//						echo $assignments['assignmentName'] . "<br>";
 						$assignmentsArray[] = $assignments['assignmentName'];
 					}
 					
@@ -232,8 +231,8 @@
 				{
 					if($assignmentFound == $assigmentGrade['assignmentid'])
 					{
-						echo "Percentage: ";
-						echo $assigmentGrade['assignmentgrade'] . "</br>";
+//						echo "Percentage: ";
+//						echo $assigmentGrade['assignmentgrade'] . "</br>";
 						$assignmentsGradesArray[] = $assigmentGrade['assignmentgrade'];
 				}
 				
@@ -263,11 +262,11 @@
 	
 
 
-if($_SERVER["REQUEST_METHOD"] == "GET")
+if($_SERVER["REQUEST_METHOD"] == "POST")
 {
 	$json = printDuePageAndGradesPage();
-	
-	
+
+    echo "$json";
 	
 	
 }
