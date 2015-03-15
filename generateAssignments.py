@@ -24,8 +24,8 @@ try:
     driver.get("https://sso.csumb.edu/cas/login?service=http%3A%2F%2Filearn.csumb.edu%2Flogin%2Findex.php%3FauthCAS%3DCAS")
 
 ##    file = open('login.txt', 'r')
-    username = sys.argv[2]
-    password = sys.argv[3]
+    username = "pesq8691"
+    password = "0254057W1s13u4kj"
     ##username = file.readline()
     username = username.strip();
     ##password = file.readline()
