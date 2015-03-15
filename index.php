@@ -3,7 +3,7 @@ To change this template use Tools | Templates.
 -->
 <?php
 	//Include - keeps processing everything else
-	require '../includes/hackathon/dbConnection.php'; //interrupts the process 
+	require 'dbConnection.php'; //interrupts the process 
 	$dbConn = getConnection();
 	///////////////////////////////////////////////////////////////////////
 	
@@ -17,8 +17,6 @@ To change this template use Tools | Templates.
 		return $stmt ->fetchAll();
 	}
 	
-	$classes = getClass();
-	
 	/////////////////////////////////////////////////////////////////////////////
 	
 	//GETS ALL STUDENTS
@@ -29,40 +27,42 @@ To change this template use Tools | Templates.
 		$stmt = $dbConn->prepare($sql); 
 		$stmt->execute(); 
 		return $stmt ->fetchAll();
-	}
-	
-	$students = getStudents();
-	
-	
+	}	
 	//////////////////////////////////////////////////////////////////////////////
 	
 	//LOOKS FOR OTTERID AND STORES THE STUDENT ID
-	
-	$studentOtterId = "hern5729";
+	$studentOtterId = $_POST['username'];
+	$studentPassword = $_POST['password'];
 	function findStudent()
 	{
 		$dbConn= getConnection();
-		$sql = "SELECT * FROM `ild_students`";
+		$sql = "SELECT otterId FROM `ild_students`";
 		$stmt = $dbConn->prepare($sql); 
 		$stmt->execute(); 
 		return $stmt ->fetchAll();
 		
 	}
-	$studentID;
-	$stundentFound  = findStudent();
-	foreach($stundentFound  as $find)
+	
+	$stundentFound  = isStudentInDb();
+	if($stundentFound)
 	{
-		if($find['otterId'] == $studentOtterId)
+		addStudentToDb();
+	}
+	
+	function isStudentInDb()
+	{
+		$stundentFound = findStudent();
+		$foundInDatabase = false;
+		foreach($stundentFound  as $find)
 		{
-			$studentID = $find['studentId'];
-			echo "Student Name: ";
-			echo $find['studentFirstName'] . " ".$find['studentLastname'];
-			echo "<br>"."Student ID: ";
-			echo $studentID;
-			echo "<br> "."otter ID: " ;
-			echo $find['otterId'] . "<br>";
-			break;
+			if($find['otterId'] == $studentOtterId)
+			{
+				return true;
+				break;
+			}
+			
 		}
+		return false;
 	}
 	
 	
