@@ -28,7 +28,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     }
     //echo "Hello";
 //    exec("python generateAssignments.py". $studentOtterID." ".$studentpassword);
-      exec("python generateAssignments.py". $studentOtterID." ".$studentpassword);
+      passthru("python generateAssignments.py 1 2>&1".$studentOtterID." ".$studentpassword);
 
     }
 }

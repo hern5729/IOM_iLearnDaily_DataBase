@@ -1,22 +1,23 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: edsan
- * Date: 3/15/15
- * Time: 3:08 AM
+/*
+ * To change this template use Tools | Templates.
  */
 
-function getConnection(){
-    $host = "localhost";
-    $dbName = "ild";
-    $username = "root";
-    $pass = "j5A2z0Z8y";
-
-    $dbConn = new PDO("mysql:host=$host;dbname=$dbName", $username, $pass);
-    $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    return $dbConn;
-}
+ function getConnection()
+ {
+ 	// Creating Database Connection
+	$host = "localhost";
+	$dbname = "ild";
+	$username = "root";
+	$password = "Monsebaby27";
+	$dbConn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+	//
+	$dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+	
+	return $dbConn;
+ }
+ 
 
 
 ?>

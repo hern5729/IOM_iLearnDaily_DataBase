@@ -34,37 +34,37 @@ To change this template use Tools | Templates.
 	//LOOKS FOR OTTERID AND STORES THE STUDENT ID
 	$studentOtterId = $_POST['username'];
 	$studentPassword = $_POST['password'];
-	function findStudent()
-	{
-		$dbConn= getConnection();
-		$sql = "SELECT otterId FROM `ild_students`";
-		$stmt = $dbConn->prepare($sql); 
-		$stmt->execute(); 
-		return $stmt ->fetchAll();
+	// function findStudent()
+	// {
+		// $dbConn= getConnection();
+		// $sql = "SELECT otterId FROM `ild_students`";
+		// $stmt = $dbConn->prepare($sql); 
+		// $stmt->execute(); 
+		// return $stmt ->fetchAll();
 		
-	}
+	// }
 	
-	$stundentFound  = isStudentInDb();
-	if($stundentFound)
-	{
-		addStudentToDb();
-	}
+	// $stundentFound  = isStudentInDb();
+	// if($stundentFound)
+	// {
+		// addStudentToDb();
+	// }
 	
-	function isStudentInDb()
-	{
-		$stundentFound = findStudent();
-		$foundInDatabase = false;
-		foreach($stundentFound  as $find)
-		{
-			if($find['otterId'] == $studentOtterId)
-			{
-				return true;
-				break;
-			}
+	// function isStudentInDb()
+	// {
+		// $stundentFound = findStudent();
+		// $foundInDatabase = false;
+		// foreach($stundentFound  as $find)
+		// {
+			// if($find['otterId'] == $studentOtterId)
+			// {
+				// return true;
+				// break;
+			// }
 			
-		}
-		return false;
-	}
+		// }
+		// return false;
+	// }
 	
 	
 	
