@@ -39,7 +39,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 					where students.otterId = '$studentOtterID'
 					limit 10";
 			$x = $dbconn->query($sql);
-			$items = $x -> fetchAll();
+			$items = $x -> fetchAll(PDO::FETCH_ASSOC);
 			
 			$json=json_encode($items);
 			echo $json;
