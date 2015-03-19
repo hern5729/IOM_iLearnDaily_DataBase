@@ -7,7 +7,7 @@
  function getConnection()
  {
  	// Creating Database Connection
-	$host = "localhost";
+	$host = "http://24.130.77.20/";
 	$dbname = "ild";
 	$username = "root";
 	$password = "Monsebaby27";
