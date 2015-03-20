@@ -18,7 +18,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" )
 			$sql = "insert into ild_students (otterId) values ('$studentOtterID');";
 			$statement = $dbconn->query($sql);
 		}
-		  //passthru("python generateAssignments.py 1 2>&1".$studentOtterID." ".$studentpassword);
+		  passthru("python generateAssignments.py 1 2>&1".$studentOtterID." ".$studentpassword);
 		  $sql = "select classes.className,assign.assignmentName, STR_TO_DATE(assign.dueDate,'%d %M %Y') as date
 					from ild_assignment assign 
 					inner join ild_classes classes on classes.classId=assign.classId 		

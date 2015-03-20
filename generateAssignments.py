@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 import time
 import courseData
 import mysql.connector
+from selenium.common.exceptions import NoSuchElementException
 
 try:
     cnx = mysql.connector.connect(user='root',
@@ -24,8 +25,8 @@ try:
     driver.get("https://sso.csumb.edu/cas/login?service=http%3A%2F%2Filearn.csumb.edu%2Flogin%2Findex.php%3FauthCAS%3DCAS")
 
 ##    file = open('login.txt', 'r')
-    username = "pesq8691"
-    password = "0254057W1s13u4kj"
+    username = sys.argv[2];
+    password = sys.argv[3];
     ##username = file.readline()
     username = username.strip();
     ##password = file.readline()
@@ -42,6 +43,7 @@ try:
 
     # Select and print an interesting element by its ID
     page = driver.find_element_by_class_name('unlist')
+    #print (page.text)
     arr = page.text.split("\n")
     links = []
     courseId = []
@@ -60,8 +62,10 @@ try:
     for link in links:
         courseId.append(link.get_attribute("href")[(link.get_attribute("href")).index("=") + 1:])
 
-
-
+##    for p in courseId:
+##        print(p)
+        
+    
     arrAssignments = []
     arrAName = []
     arrDueDate = []
@@ -69,13 +73,20 @@ try:
     studentidQuery = ("select studentId, otterId from ild_students where otterId='"+username+"';")
     cursor.execute(studentidQuery)
     userOtterId=cursor.fetchall()[0][0]
-    
+#    print(len(courseId))
     for index in range(len(courseId)):
         driver.get(assignmentLink + courseId[index])
-        page = driver.find_element_by_tag_name('tbody')
+        try:   
+            page = driver.find_element_by_tag_name('tbody')
+        except NoSuchElementException:
+            #print("NULL VALUE")
+            continue
+        #print(page.text)
+        
         arrAssignments = page.text.split("\n")
         
         for each in arrAssignments:
+#            print(each)
             tempClass = courseData.CourseData()
             tempClass.set_courseName(arr[index])
             tempArr = each.split(",")
