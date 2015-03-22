@@ -43,7 +43,6 @@ try:
 
     # Select and print an interesting element by its ID
     page = driver.find_element_by_class_name('unlist')
-    #print (page.text)
     arr = page.text.split("\n")
     links = []
     courseId = []
@@ -54,16 +53,13 @@ try:
         query = ("select exists(select className from ild_classes where className = '"+title+"') as exiists")
         cursor.execute(query)
         result = cursor.fetchall()[0][0]
-        if(result == 0):
+        if result == 0:
             add_course = ("INSERT INTO ild_classes (className) VALUES('"+title+"')")
             cursor.execute(add_course)
 
-    
     for link in links:
         courseId.append(link.get_attribute("href")[(link.get_attribute("href")).index("=") + 1:])
 
-##    for p in courseId:
-##        print(p)
         
     
     arrAssignments = []
@@ -72,39 +68,37 @@ try:
     courseAssignmentDictionary = []
     studentidQuery = ("select studentId, otterId from ild_students where otterId='"+username+"';")
     cursor.execute(studentidQuery)
-    userOtterId=cursor.fetchall()[0][0]
-#    print(len(courseId))
+    userOtterId = cursor.fetchall()[0][0]
+
     for index in range(len(courseId)):
         driver.get(assignmentLink + courseId[index])
         try:   
             page = driver.find_element_by_tag_name('tbody')
         except NoSuchElementException:
-            #print("NULL VALUE")
             continue
-        #print(page.text)
         
         arrAssignments = page.text.split("\n")
         
         for each in arrAssignments:
-#            print(each)
             tempClass = courseData.CourseData()
             tempClass.set_courseName(arr[index])
             tempArr = each.split(",")
-            datestr = time.strftime('%d')+" "+time.strftime('%m')
-            if(len(tempArr) > 1):
-                tempClass.set_assignmentName(tempArr[0])
-                tempClass.set_assignmentDueDate(tempArr[1])
-                courseAssignmentDictionary.append(tempClass)
+            if len(tempArr) > 1:
+                query = ("select exists(select assignmentName from ild_assignment where assignmentName = '"+tempArr[0]+"') as exiists")
+                cursor.execute(query)
+                result = cursor.fetchall()[0][0]
+                if result == 0:
+                    tempClass.set_assignmentName(tempArr[0])
+                    tempClass.set_assignmentDueDate(tempArr[1])
+                    courseAssignmentDictionary.append(tempClass)
+
     userOtterId = str(userOtterId)
-    
     
     for assignment in courseAssignmentDictionary:
         getCourseIdQuery = ("SELECT classId FROM ild_classes WHERE className = '"+assignment.get_courseName()+"' ")
         cursor.execute(getCourseIdQuery)
         courseId = cursor.fetchall()[0][0]
         courseId = str(courseId)
-##        print("courseId: ", courseId)
-##        print("courseName: ", assignment.get_courseName())
         addAssignment =("INSERT INTO ild_assignment (dueDate, assignmentName, classId) VALUES(%s, %s, %s)")
         addAssignmentData = (assignment.get_assignmentDueDate(),assignment.get_assignmentName(),courseId)
         cursor.execute(addAssignment, addAssignmentData)
@@ -112,9 +106,6 @@ try:
         assignmentId = str(assignmentId)
         addStudentAssignment = ("INSERT INTO ild_assignment_grade (studentId, assignmentId) VALUES('"+(userOtterId)+"','"+(assignmentId)+"')")
         cursor.execute(addStudentAssignment)
-##        print("Course Name: "+ assignment.get_courseName())
-##        print("Assignment Title: "+ assignment.get_assignmentName())
-##        print("Assignment Due: "+ assignment.get_assignmentDueDate())
      
     cnx.commit()
 except mysql.connector.Error as err:
