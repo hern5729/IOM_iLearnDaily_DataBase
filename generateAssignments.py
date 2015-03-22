@@ -54,11 +54,12 @@ try:
         cursor.execute(query)
         result = cursor.fetchall()[0][0]
         if result == 0:
+            courseId.append(links[len(links)-1].get_attribute("href")[(links[len(links)-1].get_attribute("href")).index("=") + 1:])
             add_course = ("INSERT INTO ild_classes (className) VALUES('"+title+"')")
             cursor.execute(add_course)
-
-    for link in links:
-        courseId.append(link.get_attribute("href")[(link.get_attribute("href")).index("=") + 1:])
+            
+##    for link in links:
+##        courseId.append(link.get_attribute("href")[(link.get_attribute("href")).index("=") + 1:])
 
         
     
