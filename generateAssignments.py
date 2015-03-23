@@ -109,7 +109,7 @@ try:
         assignmentIdq = ("select assignmentId from ild_assignment where assignmentName = '"+tempstr+"';")
         cursor.execute(assignmentIdq)
         assignmentIds = cursor.fetchall[0][0]
-        assignmentIds = str(assignmentId)
+        assignmentIds = str(assignmentIds)
 
         addStudentAssignment = ("INSERT INTO ild_assignment_grade (studentId, assignmentId) VALUES('"+(userOtterId)+"','"+(assignmentIds)+"')")
         cursor.execute(addStudentAssignment)
