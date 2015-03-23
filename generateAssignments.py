@@ -85,14 +85,9 @@ try:
             tempClass.set_courseName(arr[index])
             tempArr = each.split(",")
             if len(tempArr) > 1:
-                tempstr = tempArr[0].replace("'","''")
-                query = ("select exists(select assignmentName from ild_assignment where assignmentName = '"+tempstr+"') as exiists")
-                cursor.execute(query)
-                result = cursor.fetchall()[0][0]
-                if result == 0:
-                    tempClass.set_assignmentName(tempArr[0])
-                    tempClass.set_assignmentDueDate(tempArr[1])
-                    courseAssignmentDictionary.append(tempClass)
+                tempClass.set_assignmentName(tempArr[0])
+                tempClass.set_assignmentDueDate(tempArr[1])
+                courseAssignmentDictionary.append(tempClass)
 
     userOtterId = str(userOtterId)
     
@@ -101,9 +96,16 @@ try:
         cursor.execute(getCourseIdQuery)
         courseId = cursor.fetchall()[0][0]
         courseId = str(courseId)
-        addAssignment =("INSERT INTO ild_assignment (dueDate, assignmentName, classId) VALUES(%s, %s, %s)")
-        addAssignmentData = (assignment.get_assignmentDueDate(),assignment.get_assignmentName(),courseId)
-        cursor.execute(addAssignment, addAssignmentData)
+        #Check for duplicates
+        tempstr = assignment.get_assignmentName.replace("'","''")
+        query = ("select exists(select assignmentName from ild_assignment where assignmentName = '"+tempstr+"') as exiists")
+        cursor.execute(query)
+        result = cursor.fetchall()[0][0]
+        if result == 0:
+            addAssignment =("INSERT INTO ild_assignment (dueDate, assignmentName, classId) VALUES(%s, %s, %s)")
+            addAssignmentData = (assignment.get_assignmentDueDate(),assignment.get_assignmentName(),courseId)
+            cursor.execute(addAssignment, addAssignmentData)
+
         assignmentId = cursor.lastrowid
         assignmentId = str(assignmentId)
         addStudentAssignment = ("INSERT INTO ild_assignment_grade (studentId, assignmentId) VALUES('"+(userOtterId)+"','"+(assignmentId)+"')")
