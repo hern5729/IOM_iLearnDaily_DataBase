@@ -97,7 +97,7 @@ try:
         courseId = cursor.fetchall()[0][0]
         courseId = str(courseId)
         #Check for duplicates
-        tempstr = assignment.get_assignmentName.replace("'","''")
+        tempstr = assignment.get_assignmentName().replace("'","''")
         query = ("select exists(select assignmentName from ild_assignment where assignmentName = '"+tempstr+"') as exiists")
         cursor.execute(query)
         result = cursor.fetchall()[0][0]
