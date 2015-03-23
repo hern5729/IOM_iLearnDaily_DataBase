@@ -106,12 +106,12 @@ try:
             addAssignmentData = (assignment.get_assignmentDueDate(),assignment.get_assignmentName(),courseId)
             cursor.execute(addAssignment, addAssignmentData)
 
-        assignmentIdq = ("select assignmentId from ild_assignment where assignmentName = '"+tempstr+"'")
+        assignmentIdq = ("select assignmentId from ild_assignment where assignmentName = '"+tempstr+"';")
         cursor.execute(assignmentIdq)
-        assignmentId = cursor.fetchall[0][0]
-        assignmentId = str(assignmentId)
+        assignmentIds = cursor.fetchall[0][0]
+        assignmentIds = str(assignmentId)
 
-        addStudentAssignment = ("INSERT INTO ild_assignment_grade (studentId, assignmentId) VALUES('"+(userOtterId)+"','"+(assignmentId)+"')")
+        addStudentAssignment = ("INSERT INTO ild_assignment_grade (studentId, assignmentId) VALUES('"+(userOtterId)+"','"+(assignmentIds)+"')")
         cursor.execute(addStudentAssignment)
      
     cnx.commit()
