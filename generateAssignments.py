@@ -25,8 +25,8 @@ try:
     driver.get("https://sso.csumb.edu/cas/login?service=http%3A%2F%2Filearn.csumb.edu%2Flogin%2Findex.php%3FauthCAS%3DCAS")
 
 ##    file = open('login.txt', 'r')
-    username = sys.argv[2];
-    password = sys.argv[3];
+    username = "diaz2691"#sys.argv[2];
+    password = "Pechocha27!"#sys.argv[3];
     ##username = file.readline()
     username = username.strip();
     ##password = file.readline()
@@ -97,7 +97,7 @@ try:
         courseId = cursor.fetchall()[0][0]
         courseId = str(courseId)
         #Check for duplicates
-        tempstr = assignment.get_assignmentName().replace("'","''")
+        tempstr = assignment.get_assignmentName().replace("'","")
         query = ("select exists(select assignmentName from ild_assignment where assignmentName = '"+tempstr+"') as exiists")
         cursor.execute(query)
         result = cursor.fetchall()[0][0]
@@ -108,7 +108,8 @@ try:
 
         assignmentIdq = ("select assignmentId from ild_assignment where assignmentName = '"+tempstr+"';")
         cursor.execute(assignmentIdq)
-        assignmentIds = cursor.fetchrow[0]
+        assignmentIds = cursor.fetchone()[0]
+        print(assignmentIds)
         assignmentIds = str(assignmentIds)
         addStudentAssignmentData = (userOtterId, assignmentIds)
         addStudentAssignment = ("INSERT INTO ild_assignment_grade (studentId, assignmentId) VALUES(%s, %s)")
