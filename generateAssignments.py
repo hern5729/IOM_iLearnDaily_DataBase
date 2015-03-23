@@ -85,8 +85,8 @@ try:
             tempClass.set_courseName(arr[index])
             tempArr = each.split(",")
             if len(tempArr) > 1:
-                query = ("select exists(select assignmentName from ild_assignment where assignmentName = '%s') as exiists")
-                querya = (tempArr[0])
+                query = ("select exists(select assignmentName from ild_assignment where assignmentName = %s) as exiists")
+                querya = tempArr[0]
                 cursor.execute(query, querya)
                 result = cursor.fetchall()[0][0]
                 if result == 0:
