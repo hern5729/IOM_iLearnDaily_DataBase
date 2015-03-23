@@ -108,11 +108,11 @@ try:
 
         assignmentIdq = ("select assignmentId from ild_assignment where assignmentName = '"+tempstr+"';")
         cursor.execute(assignmentIdq)
-        assignmentIds = cursor.fetchall[0][0]
+        assignmentIds = cursor.fetchrow[0]
         assignmentIds = str(assignmentIds)
-
-        addStudentAssignment = ("INSERT INTO ild_assignment_grade (studentId, assignmentId) VALUES('"+(userOtterId)+"','"+(assignmentIds)+"')")
-        cursor.execute(addStudentAssignment)
+        addStudentAssignmentData = (userOtterId, assignmentIds)
+        addStudentAssignment = ("INSERT INTO ild_assignment_grade (studentId, assignmentId) VALUES(%s, %s)")
+        cursor.execute(addStudentAssignment, addStudentAssignmentData)
      
     cnx.commit()
 except mysql.connector.Error as err:
